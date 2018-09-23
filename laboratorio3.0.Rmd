@@ -1,0 +1,93 @@
+---
+title: "Laboratorio 3 Dana Pérez 17127, Luisa Arboleda 14458, Jennifer Barillas 15307"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+opts_knit$set(root.dir = "~/laboratoriotres")
+```
+
+#Introducción
+
+En este laboratorio utilizaremos el reconocimiento de carácteres manuscritos para poder visualizar las imágenes. Se iniciará realizando un análisis exploratorio para entender de mejor forma como se encuentran los datos y poder analizar que algoritmos son la mejor opción a desarrollar. 
+
+Luego trabajaremos en un modelo de redes neuronales simples, se relizará un modelo de deep learning y se desarollará un algoritmo el cual se considere sea la mejor opción para poder reconocer la imagen. Al final se determinará la efectividad de cada uno.
+
+
+#Descarga de Archivos
+
+```{r descarga y visualización de variables}
+#descarga de los archivos 
+test <-read.csv("./test.csv", stringsAsFactors = TRUE)
+train <- read.csv("./train.csv")
+
+#visualizacion de variables
+str(test)
+str(train)
+
+```
+
+Descargamos los archivos de test y train. Los cuales muestran las columnas con pixeles.
+
+```{r instalación de paquetes}
+#paquetes
+
+install.packages("tsne")
+install.packages("Rtsne")
+install.packages("ggplot2")
+```
+
+#Análisis Exploratorio
+
+```{r Tsne}
+
+#Nombrando la base
+labels <- train$label
+train$label <- as.factor(train$label)
+
+#plotting
+colors = rainbow(length(unique(train$label)))
+names(colors) = unique(train$label)
+
+#ejecución del algoritmo
+Rtsne(train[,-1], dims = 2, perplexity=30, verbose=TRUE, max_iter = 500)
+exeTimeTsne<- system.time(Rtsne(train[,-1], dims = 2, perplexity=30, verbose=TRUE, max_iter = 500))
+
+plot(tsne_out$Y,col=train$label)
+
+```
+
+
+```{r gráfica de barras}
+ggplot(train, aes(x=label)) + geom_bar(width = 0.5)
+
+
+```
+
+En este gráfico podemos observar la frecuencia con la que se obtienen los pixeles, es posible observar que no existe una diferencia significativa sin embargo el segundo puxel es el que más aparece en las ímagenes a encontrar.
+
+
+#Modelo de redes neuronales
+
+```{r redes neuronales}
+
+```
+
+#Deep learning
+
+```{r deep learning}
+
+```
+
+#Algoritmo seleccionado
+
+```{r algoritmo seleccionado}
+
+```
+
+
