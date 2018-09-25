@@ -1,14 +1,26 @@
-#library(readxl)
-#train <- read.csv("C:/Users/JennyMBB/Desktop/Data Science/Laboratorio 3/all/train.csv")
-#test <- read.csv("C:/Users/JennyMBB/Desktop/Data Science/Laboratorio 3/all/train.csv")
-
-
-#install.packages("readr")
 library(readr)
+library(tsne)
+library(Rtsne)
+library(ggplot2)
+
 train <- read.csv("C:/Users/JennyMBB/Desktop/Data Science/Laboratorio 3/all/train.csv")
 test <- read.csv("C:/Users/JennyMBB/Desktop/Data Science/Laboratorio 3/all/train.csv")
-head(train[1:42000])
+head(train[1:785])
 
+labels <- train$label
+train$label <- as.factor(train$label)
+
+#plotting
+colors = rainbow(length(unique(train$label)))
+names(colors) = unique(train$label)
+
+#ejecución del algoritmo
+c <- Rtsne(train[,-1], dims = 2, perplexity=30, verbose=TRUE, max_iter = 500)
+#exeTimeTsne<- system.time(Rtsne(train[,-1], dims = 2, perplexity=30, verbose=TRUE, max_iter = 500))
+
+#plot(tsne_out$Y,col=train$label)
+
+ggplot(train, aes(x=label)) + geom_bar(width = 0.5)
 # Create a 28*28 matrix with pixel color values
 m = matrix(unlist(train[1,785]),nrow = 28,byrow = T)
 # Plot that matrix
